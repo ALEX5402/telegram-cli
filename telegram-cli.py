@@ -69,9 +69,9 @@ def main():
                 if args.private:
                     entity = await client.get_entity(PeerUser(target_id))
                 elif args.group:
-                    entity = await client.get_entity(PeerChat(target_id))
+                    entity = target_id
                 elif args.channel:
-                    entity = await client.get_entity(PeerChannel(target_id))
+                    entity = target_id
 
             if args.text:
                 await client.send_message(entity, args.text)
