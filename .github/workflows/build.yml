@@ -1,0 +1,35 @@
+name: Build Apk
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build Executable
+        run: |
+          pyinstaller --onefile --hidden-import=pyasn1 --hidden-import=rsa --hidden-import=Telethon --hidden-import=pyaes --add-binary '/usr/lib/libstdc++.so.6:.' --strip --noconsole --clean telegram-cli.py
+
+      - name: Upload Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: executable
+          path: |
+            dist/telegram-cli
