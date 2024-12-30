@@ -1,4 +1,4 @@
-name: Build Apk
+name: Build
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
 
       - name: Build Executable
         run: |
-          pyinstaller --onefile --hidden-import=pyasn1 --hidden-import=rsa --hidden-import=Telethon --hidden-import=pyaes --add-binary '/usr/lib/libstdc++.so.6:.' --strip --noconsole --clean telegram-cli.py
+          pyinstaller --onefile --hidden-import=pyasn1 --hidden-import=rsa --hidden-import=Telethon --hidden-import=pyaes --strip --noconsole --clean telegram-cli.py
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
